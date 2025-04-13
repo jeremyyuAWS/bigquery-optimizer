@@ -693,6 +693,157 @@ WHERE event_date > '2025-01-01'`);
   
   const [activePricingTab, setActivePricingTab] = useState('comparison');
 
+  const renderPricingModelsTab = () => (
+    <div className="space-y-6">
+      <div className="bg-white rounded-lg shadow p-6">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">BigQuery Pricing Models</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <h4 className="font-medium text-blue-800 mb-2">On-Demand Pricing</h4>
+            <p className="text-sm text-gray-600 mb-2">$6.25 per TiB processed</p>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Pay only for what you use</li>
+              <li>• Ideal for unpredictable workloads</li>
+              <li>• No upfront commitment</li>
+            </ul>
+          </div>
+          <div className="bg-green-50 p-4 rounded-lg">
+            <h4 className="font-medium text-green-800 mb-2">Capacity-Based Pricing</h4>
+            <p className="text-sm text-gray-600 mb-2">Fixed cost per slot</p>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Predictable monthly costs</li>
+              <li>• Best for high-volume workloads</li>
+              <li>• Better cost efficiency at scale</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg shadow p-6">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">AI-Driven Optimization Strategies</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-4">
+            <div className="flex items-center mb-2">
+              <Code className="h-5 w-5 text-blue-600 mr-2" />
+              <h4 className="font-medium text-gray-800">Query Analysis</h4>
+            </div>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Detect inefficient queries</li>
+              <li>• Automated refactoring</li>
+              <li>• Partitioning advice</li>
+            </ul>
+          </div>
+          <div className="bg-white border border-gray-200 rounded-lg p-4">
+            <div className="flex items-center mb-2">
+              <DollarSign className="h-5 w-5 text-green-600 mr-2" />
+              <h4 className="font-medium text-gray-800">Cost Monitoring</h4>
+            </div>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Real-time spend tracking</li>
+              <li>• Anomaly detection</li>
+              <li>• Cost forecasting</li>
+            </ul>
+          </div>
+          <div className="bg-white border border-gray-200 rounded-lg p-4">
+            <div className="flex items-center mb-2">
+              <HardDrive className="h-5 w-5 text-purple-600 mr-2" />
+              <h4 className="font-medium text-gray-800">Storage Optimization</h4>
+            </div>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Lifecycle management</li>
+              <li>• Duplicate detection</li>
+              <li>• Batch loading advice</li>
+            </ul>
+          </div>
+          <div className="bg-white border border-gray-200 rounded-lg p-4">
+            <div className="flex items-center mb-2">
+              <Shield className="h-5 w-5 text-red-600 mr-2" />
+              <h4 className="font-medium text-gray-800">Security & Compliance</h4>
+            </div>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Sensitive data monitoring</li>
+              <li>• Permission auditing</li>
+              <li>• Residency compliance</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg shadow p-6">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Interactive Dashboards</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="font-medium text-gray-800">Query Performance</h4>
+              <RefreshCw className="h-4 w-4 text-gray-400" />
+            </div>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsLineChart data={queryPerformanceData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="before" stroke="#ef4444" name="Before Optimization" />
+                  <Line type="monotone" dataKey="after" stroke="#22c55e" name="After Optimization" />
+                </RechartsLineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+          <div className="bg-white border border-gray-200 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="font-medium text-gray-800">Cost Trends</h4>
+              <RefreshCw className="h-4 w-4 text-gray-400" />
+            </div>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsLineChart data={costTrendData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="actual" stroke="#3b82f6" name="Actual" />
+                  <Line type="monotone" dataKey="predicted" stroke="#f59e0b" name="Predicted" />
+                </RechartsLineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg shadow p-6">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Alerts & Notifications</h3>
+        <div className="space-y-4">
+          {budgetAlerts.map((alert) => (
+            <div key={alert.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div>
+                <h4 className="font-medium text-gray-800">{alert.name}</h4>
+                <p className="text-sm text-gray-600">
+                  Current: {alert.current} / Threshold: {alert.threshold}
+                </p>
+              </div>
+              <div className="flex items-center">
+                <div className="w-32 h-2 bg-gray-200 rounded-full mr-4">
+                  <div
+                    className={`h-full rounded-full ${
+                      alert.percentage > 90 ? 'bg-red-500' : alert.percentage > 70 ? 'bg-yellow-500' : 'bg-green-500'
+                    }`}
+                    style={{ width: `${alert.percentage}%` }}
+                  />
+                </div>
+                <span className={`text-sm font-medium ${
+                  alert.percentage > 90 ? 'text-red-600' : alert.percentage > 70 ? 'text-yellow-600' : 'text-green-600'
+                }`}>
+                  {alert.status}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
   const renderIdleResourcesTab = () => (
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow p-6">
@@ -762,6 +913,17 @@ WHERE event_date > '2025-01-01'`);
                 <HardDrive className="mr-3 h-5 w-5" />
                 Idle Resources
               </button>
+              <button
+                onClick={() => setActivePage('pricing-models')}
+                className={`flex items-center px-4 py-2 text-sm font-medium rounded-md w-full ${
+                  activePage === 'pricing-models'
+                    ? 'bg-blue-50 text-blue-700'
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                <DollarSign className="mr-3 h-5 w-5" />
+                Pricing & Optimization
+              </button>
             </div>
           </nav>
         </div>
@@ -775,6 +937,7 @@ WHERE event_date > '2025-01-01'`);
           </div>
         )}
         {activePage === 'idle-resources' && renderIdleResourcesTab()}
+        {activePage === 'pricing-models' && renderPricingModelsTab()}
       </div>
     </div>
   );
