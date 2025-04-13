@@ -693,10 +693,91 @@ WHERE event_date > '2025-01-01'`);
   
   const [activePricingTab, setActivePricingTab] = useState('comparison');
 
+  const renderIdleResourcesTab = () => (
+    <div className="space-y-6">
+      <div className="bg-white rounded-lg shadow p-6">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Idle Resources</h3>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resource</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Accessed</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monthly Cost</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Recommendation</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Potential Savings</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {idleResourceData.map((resource, index) => (
+                <tr key={index} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{resource.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{resource.type}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{resource.lastAccessed}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{resource.size}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{resource.monthlyCost}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{resource.recommendation}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-medium">{resource.savings}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gray-100 flex">
       {/* Sidebar */}
       <div className="w-64 bg-white shadow-md">
         <div className="p-6">
           <div className="flex items-center space-x-2">
-            <img src="/src/public/images/bigquery-svgrepo-com.svg" alt="QueryGenius Logo" className="h-8 w-8" />
+            <Database className="h-8 w-8 text-blue-600" />
+            <span className="text-xl font-bold text-gray-800">QueryGenius</span>
+          </div>
+          <nav className="mt-8">
+            <div className="space-y-1">
+              <button
+                onClick={() => setActivePage('dashboard')}
+                className={`flex items-center px-4 py-2 text-sm font-medium rounded-md w-full ${
+                  activePage === 'dashboard'
+                    ? 'bg-blue-50 text-blue-700'
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                <LineChart className="mr-3 h-5 w-5" />
+                Dashboard
+              </button>
+              <button
+                onClick={() => setActivePage('idle-resources')}
+                className={`flex items-center px-4 py-2 text-sm font-medium rounded-md w-full ${
+                  activePage === 'idle-resources'
+                    ? 'bg-blue-50 text-blue-700'
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                <HardDrive className="mr-3 h-5 w-5" />
+                Idle Resources
+              </button>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 p-8">
+        {activePage === 'dashboard' && (
+          <div className="space-y-6">
+            {/* Dashboard content */}
+          </div>
+        )}
+        {activePage === 'idle-resources' && renderIdleResourcesTab()}
+      </div>
+    </div>
+  );
+}
+
+export default App;
